@@ -70,7 +70,7 @@ std = [
 
 This second line defines the `default` features of your runtime crate as `std`. You can imagine, each module crate has a similar configuration defining the default feature for the crate. Your feature will determine the features that should be used on downstream dependencies. For example, the snippet above should be read as:
 
-> The default feature for this Substrate runtime is `std`. When `std` feature is enabled for the runtime, `parity-codec`, `primitives`, `client`, and all the other listed dependencies should use their `std` feature too.
+> The default feature for this Substrate runtime is `std`. When `std` feature is enabled for the runtime, `parity-scale-codec`, `primitives`, `client`, and all the other listed dependencies should use their `std` feature too.
 
 This is important to enable the Substrate runtime to compile to both native binaries (which support Rust [`std`](https://doc.rust-lang.org/std/)) and Wasm binaries (which do not: [`no_std`](https://rust-embedded.github.io/book/intro/no-std.html)).
 
@@ -116,7 +116,7 @@ package = 'srml-contracts'
 rev = '<git-commit>'
 ```
 
-You [can see](https://github.com/paritytech/substrate/blob/v2.0/srml/contracts/Cargo.toml) that the Contracts module has `std` and `no_std` features, thus we need to add the features to our runtime:
+You [can see](https://github.com/paritytech/substrate/blob/v2.0/srml/contracts/Cargo.toml) that the Contracts module has `std` and `no_std` features, thus we need to add both features to our runtime:
 
 ```rust
 [features]
@@ -150,7 +150,7 @@ cargo build --release
 
 ## Adding the Contracts module
 
-Now that we have successfully imported the Contracts module crate, we need to add it to our Runtime. The first thing we need to add, is the Gas type to use it in our runtime.
+Now that we have successfully imported the Contracts module crate, we need to add it to our Runtime. The first thing we will add to our runtime is the Gas type.
 
 **lib.rs**
 ```rust
@@ -179,7 +179,7 @@ If you have followed our [other basic tutorials](tutorials/creating-your-first-s
 
 ### Implementing the Contract Trait
 
-To figure out what we need to implement, you can take a look at the [`srml_contracts::Trait` documentation](/rustdocs/v2.0/srml_contracts/trait.Trait.html) or the [Contracts module source code](https://github.com/paritytech/substrate/blob/v2.0/srml/contracts/src/lib.rs). For our runtime, the implementation will look like this:
+To figure out what we need to implement, you can take a look at the SRML  [`contracts::Trait` documentation](/rustdocs/v2.0/srml_contracts/trait.Trait.html) or the [Contracts module source code](https://github.com/paritytech/substrate/blob/v2.0/srml/contracts/src/lib.rs). For our runtime, the implementation will look like this:
 
 ```rust
 impl contracts::Trait for Runtime {
